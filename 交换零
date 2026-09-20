@@ -1,0 +1,32 @@
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+
+   
+                for(int j=0;j<static_cast<int>(nums.size())-1;j++){
+                     if(j==-1)
+                    {
+                     break;
+                    }
+                    if(nums[j]==0){
+                   
+                    for(int k=0;k+j<nums.size()-1;)
+                    {
+                        if(nums[j+1+k]==0)
+                        {
+                            k++;
+                        }
+                        else
+                        {
+                        nums[j]=nums[j+1+k];
+                        nums[j+1+k]=0;//swap(nums[j],nums[j+1+k]);
+                        break;
+                        }
+                    }
+                    }
+                }
+              
+        
+        
+    }
+};
