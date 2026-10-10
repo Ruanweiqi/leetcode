@@ -1,0 +1,73 @@
+#include<iostream>
+using namespace std;
+#define Maxizise 100
+typedef struct {
+	int num[Maxizise];
+	int length;
+}Sqlist;
+
+//创建
+void Inilist(Sqlist*& L) {
+	L = (Sqlist*)malloc(sizeof(Sqlist));
+	L->length = 0;
+}
+//删除
+void Destroylist(Sqlist*& L) {
+	free(L);
+}
+//判断是否为空
+bool Emptylist(Sqlist* L) {
+	if (L->length == 0)
+		return true;
+	else return false;
+}
+//返回表长度
+int Lengthlist(Sqlist* L) {
+	return L->length;
+}
+//输出线性表
+void Displist(Sqlist* L) {
+	for (int i = 0; i < L->length ; i++) {
+		cout << L->num[i] << endl;
+	}
+}
+//按序号求线性表中第i个元素
+void Getelem(Sqlist* L,int i) {
+	if (i<1 || i>L->length)
+		cout << "i值超出范围" << endl;
+	else
+	    cout << L->num[i - 1];
+}
+//按元素值查找元素，返回第几个
+int Locateelem(Sqlist* L, int elem) {
+	for (int i = 0; i < L->length; i++) {
+		if (L->num[i] == elem) {
+			return i + 1;
+		}
+	}
+	return -1;
+}
+//插入
+void Listinsert(Sqlist*& L, int elem,int i) {
+	if (i<1 || i>L->length + 1)
+		cout << "位置错误！" << endl;
+	else {
+		for (int j = L->length - 1; j > i - 1; j--) {
+			L->num[j + 1] = L->num[j];
+		}
+		L->num[i - 1] = elem;
+		L->length++;
+	}
+	
+}
+//删除
+void Listdelete(Sqlist*& L, int i) {
+	if (i<1 || i>L->length)
+		cout << "位置错误！" << endl;
+	else{
+		for (int j = i - 1; j < L->length - 1; j++) {
+			L->num[j] = L->num[j + 1];
+		}
+		L->length--;
+	}
+}
