@@ -1,0 +1,133 @@
+#include<iostream>
+#include <cstdlib>
+using namespace std;
+typedef int Elemtype;
+//定义
+typedef struct LNode {
+	Elemtype data;
+	struct LNode* next;
+}LinkNode;
+//单链表的9个基础函数
+//初始化(带头结点)
+void InitLNode(LinkNode*& L) {
+	L = (LinkNode*)malloc(sizeof(LinkNode));
+	L->next = NULL;
+}
+//销毁
+void DestoryLNode(LinkNode*& L) {
+	LinkNode* p, * r;
+	p = L;
+	r = L->next;
+	while (r != NULL) {
+		free(p);
+		p = r;
+		r = r->next;
+	}
+	free(p);
+}
+//判断是否为空
+bool EmptyLNode(LinkNode* L) {
+	return(L->next == NULL);
+}
+//求长度
+int LengthLNode(LinkNode* L) {
+	int i = 0;
+	LinkNode* p;
+	p = L;
+	while (p->next != NULL){
+		i++;
+		p = p->next;
+	}
+	return i;
+}
+//输出线性表
+void PrintLNode(LinkNode* L) {
+	LinkNode* p;
+	p = L->next;
+	while (p != NULL) {
+		cout << p->data<<",";
+		p = p->next;
+	}
+}
+//按序号求元素
+bool GetElem(LinkNode* L, int i, Elemtype& e) {
+	LinkNode* p;
+	int j = 1;
+	p = L->next;
+	if (i < 1) {
+		return 0;
+	}
+	while (j < i && p != NULL) {
+		p = p->next;
+		j++;
+	}
+	if (p == NULL) {
+		return 0;
+	}
+	else {
+		e = p->data;
+		return 1;
+	}
+
+}
+//按元素查找
+int LocateElem(LinkNode* L, Elemtype e) {
+	LinkNode* p;
+	int i = 1;
+	p = L->next;
+	while (p != NULL&&p->data!=e) {
+		p = p->next;
+		i++;
+	}
+	if (p == NULL)
+		return 0;
+	else
+		return i;
+}
+//插入数据元素
+bool LNodeInsert(LinkNode*& L,int i, Elemtype e) {
+	LinkNode* p,*s;
+	p = L->next;
+	int j = 0;
+	if (i < 1)
+		return 0;
+	while (j < i - 1 && p != NULL) {
+		p = p->next;
+		j++;
+	}
+	if (p == NULL)
+		return 0;
+	else {
+		s = (LinkNode*)malloc(sizeof(LinkNode));
+		s->data = e;
+		s->next = p->next;
+		p->next = s;
+		return 1;
+	}
+
+}
+//删除数据元素
+bool LNodeDelete(LinkNode*& L, int i, Elemtype &e) {
+	LinkNode* p,*q;
+	p = L->next;
+	int j = 0;
+	if (i < 1)
+		return 0;
+	while (j < i - 1 && p != NULL) {
+		p = p->next;
+		j++;
+	}
+	if (p == NULL)
+		return 0;
+	else{
+		q = p->next;
+		if (q == NULL) {
+			return 0;
+		}
+		e = q->data;
+		p->next = q->next;
+		free(q);
+		return 1;
+	}
+
+}

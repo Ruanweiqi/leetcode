@@ -18,7 +18,7 @@ void CreateListF(LinkNode*& L, int arr[], int n) {
 	}
 }
 //尾插法
-void CreateListR(LinkNode* L, int arr[], int n) {
+void CreateListR(LinkNode*& L, int arr[], int n) {
 	LinkNode* s,*r;
 	L = (LinkNode*)malloc(sizeof(LinkNode));
 	r = L;
