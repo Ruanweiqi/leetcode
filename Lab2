@@ -1,0 +1,101 @@
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+typedef struct LNode {
+	char data;
+	struct LNode *next;
+} LinkNode;
+
+// 初始化：创建头结点
+void InitLNode(LinkNode* &L) {
+	L = (LinkNode *)malloc(sizeof(LinkNode));
+	L->next = nullptr;
+}
+
+// 尾插法建立单链表（L 已初始化）
+void CreateLNode(LinkNode* &L, char arr[], int n) {
+	LinkNode *p = L;
+	for (int i = 0; i < n; i++) {
+		LinkNode *s = (LinkNode *)malloc(sizeof(LinkNode));
+		s->data = arr[i];
+		s->next = nullptr;
+		p->next = s;
+		p = s;
+	}
+}
+
+// 判断元素 e 是否在链表 L 中
+bool isExist(LinkNode *L, char e) {
+	LinkNode *p = L->next;
+	while (p != nullptr) {
+		if (p->data == e)
+			return true;
+		p = p->next;
+	}
+	return false;
+}
+
+// 求集合交集 A ∩ B，结果存入 C
+void Intersection(LinkNode *A, LinkNode *B, LinkNode* &C) {
+	InitLNode(C);
+	LinkNode *p = A->next;
+	LinkNode *tail = C;
+	while (p != nullptr) {
+		// A 的元素同时在 B 中，且 C 里没有，避免集合重复
+		if (isExist(B, p->data) && !isExist(C, p->data)) {
+			LinkNode *s = (LinkNode *)malloc(sizeof(LinkNode));
+			s->data = p->data;
+			s->next = nullptr;
+			tail->next = s;
+			tail = s;
+		}
+		p = p->next;
+	}
+}
+
+// 输出链表
+void PrintLNode(LinkNode *L) {
+	LinkNode *p = L->next;
+	while (p != nullptr) {
+		cout << p->data << " ";
+		p = p->next;
+	}
+	cout << endl;
+}
+
+// 销毁链表，free 释放内存
+void DestroyLNode(LinkNode* &L) {
+	LinkNode *p = L;
+	while (p != nullptr) {
+		LinkNode *q = p;
+		p = p->next;
+		free(q);
+	}
+	L = nullptr;
+}
+
+int main() {
+	LinkNode *A, *B, *C;
+	char arrA[] = { 'c', 'a', 'e', 'h' };
+	char arrB[] = { 'f', 'h', 'b', 'g', 'd', 'a' };
+
+	InitLNode(A);
+	CreateLNode(A, arrA, 4);
+	InitLNode(B);
+	CreateLNode(B, arrB, 6);
+
+	cout << "集合A：";
+	PrintLNode(A);
+	cout << "集合B：";
+	PrintLNode(B);
+
+	Intersection(A, B, C);
+	cout << "A∩B 交集：";
+	PrintLNode(C);
+
+	DestroyLNode(A);
+	DestroyLNode(B);
+	DestroyLNode(C);
+	return 0;
+}
