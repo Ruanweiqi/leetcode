@@ -36,5 +36,6 @@ bool deQueue(SqQueue*& q, int& e) {
 	else {
 		q->front++;
 		e = q->data[q->front];
+        return true;
 	}
 }

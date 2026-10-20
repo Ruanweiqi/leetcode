@@ -1,0 +1,41 @@
+#include<iostream>
+using namespace std;
+#define Maxsize 100
+//定义队列
+typedef struct {
+	int data[Maxsize];
+	int front, rear;
+}SqQueue;
+//初始化
+void InitQueue(SqQueue*& q) {
+	q = (SqQueue*)malloc(sizeof(SqQueue));
+	q->front = q->rear = 0;
+}
+//销毁
+void DestoryQueue(SqQueue*& q) {
+	free(q);
+}
+//判断是否为空
+bool QueueEmpty(SqQueue* q) {
+	return(q->front == q->rear);
+}
+//入队
+bool enQueue(SqQueue*& q, int e) {
+	if ((q->rear++)%Maxsize==q->front)
+		return false;
+	else {
+		q->rear = (q->rear + 1) % Maxsize;
+		q->data[q->rear] = e;
+		return true;
+	}
+}
+//出队
+bool deQueue(SqQueue*& q, int& e) {
+	if (q->front == q->rear)
+		return false;
+	else {
+		q->front=(q->front+1)%Maxsize;
+		e = q->data[q->front];
+		return true;
+	}
+}

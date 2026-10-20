@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cstdlib>
 using namespace std;
 
 typedef struct LNode {
@@ -9,26 +8,26 @@ typedef struct LNode {
 
 // 初始化：创建头结点
 void InitLNode(LinkNode* &L) {
-	L = (LinkNode *)malloc(sizeof(LinkNode));
-	L->next = nullptr;
+	L = (LNode *)malloc(sizeof(LNode));
+	L->next = NULL;
 }
 
-// 尾插法建立单链表（L 已初始化）
+// 尾插法建立单链表
 void CreateLNode(LinkNode* &L, char arr[], int n) {
-	LinkNode *p = L;
+	LNode *p = L;
 	for (int i = 0; i < n; i++) {
-		LinkNode *s = (LinkNode *)malloc(sizeof(LinkNode));
+		LNode *s = (LNode *)malloc(sizeof(LNode));
 		s->data = arr[i];
-		s->next = nullptr;
+		s->next = NULL;
 		p->next = s;
 		p = s;
 	}
 }
 
-// 判断元素 e 是否在链表 L 中
-bool isExist(LinkNode *L, char e) {
-	LinkNode *p = L->next;
-	while (p != nullptr) {
+// 判断元素e是否在链表L中
+bool isExist(LinkNode *L, char e) {  
+	LNode *p = L->next;
+	while (p != NULL) {
 		if (p->data == e)
 			return true;
 		p = p->next;
@@ -36,15 +35,15 @@ bool isExist(LinkNode *L, char e) {
 	return false;
 }
 
-// 求集合交集 A ∩ B，结果存入 C
-void Intersection(LinkNode *A, LinkNode *B, LinkNode* &C) {
+// 求集合交集 A ∩ B，结果存入C
+void Intersection(LinkNode* A, LinkNode*B, LinkNode* &C) {
 	InitLNode(C);
-	LinkNode *p = A->next;
-	LinkNode *tail = C;
-	while (p != nullptr) {
-		// A 的元素同时在 B 中，且 C 里没有，避免集合重复
+	LNode *p = A->next;
+	LNode *q = C;
+	while (p != NULL) {
+		// A的元素同时在B中，且C里没有，避免集合重复
 		if (isExist(B, p->data) && !isExist(C, p->data)) {
-			LinkNode *s = (LinkNode *)malloc(sizeof(LinkNode));
+			LNode *s = (LNode *)malloc(sizeof(LNode));
 			s->data = p->data;
 			s->next = nullptr;
 			tail->next = s;
@@ -55,8 +54,8 @@ void Intersection(LinkNode *A, LinkNode *B, LinkNode* &C) {
 }
 
 // 输出链表
-void PrintLNode(LinkNode *L) {
-	LinkNode *p = L->next;
+void PrintList(LinkList* L) {
+	LNode *p = L->next;
 	while (p != nullptr) {
 		cout << p->data << " ";
 		p = p->next;
@@ -64,11 +63,12 @@ void PrintLNode(LinkNode *L) {
 	cout << endl;
 }
 
-// 销毁链表，free 释放内存
-void DestroyLNode(LinkNode* &L) {
-	LinkNode *p = L;
+// 销毁链表，free释放内存
+void DestroyList(LinkList *&L) {
+	LNode *p, *q;
+	p = L;
 	while (p != nullptr) {
-		LinkNode *q = p;
+		q = p;
 		p = p->next;
 		free(q);
 	}
@@ -76,26 +76,26 @@ void DestroyLNode(LinkNode* &L) {
 }
 
 int main() {
-	LinkNode *A, *B, *C;
-	char arrA[] = { 'c', 'a', 'e', 'h' };
-	char arrB[] = { 'f', 'h', 'b', 'g', 'd', 'a' };
+	LinkList*A, *B,* C;
+	char arrA[] = { 'c','a','e','h' };
+	char arrB[] = { 'f','h','b','g','d','a' };
 
-	InitLNode(A);
-	CreateLNode(A, arrA, 4);
-	InitLNode(B);
-	CreateLNode(B, arrB, 6);
+	InitList(A);
+	CreateListTail(A, arrA, 4);
+	InitList(B);
+	CreateListTail(B, arrB, 6);
 
 	cout << "集合A：";
-	PrintLNode(A);
+	PrintList(A);
 	cout << "集合B：";
-	PrintLNode(B);
+	PrintList(B);
 
 	Intersection(A, B, C);
 	cout << "A∩B 交集：";
-	PrintLNode(C);
+	PrintList(C);
 
-	DestroyLNode(A);
-	DestroyLNode(B);
-	DestroyLNode(C);
+	DestroyList(A);
+	DestroyList(B);
+	DestroyList(C);
 	return 0;
 }
