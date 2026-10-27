@@ -24,8 +24,8 @@ bool Push(SqStack*& S, int e) {
 	if (S->top == Maxsize - 1)
 		return false;
 	else {
-		S->data[S->top] = e;
 		S->top++;
+		S->data[S->top] = e;
 		return true;
 	}
 }

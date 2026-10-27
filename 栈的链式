@@ -15,9 +15,9 @@ void InitStack(LinkStnode*& s) {
 void Destory(LinkStnode*& s) {
 	LinkStnode* pre=s, * p;
 	while (p != NULL) {
+		p = pre->next;
 		free(pre);
 		pre = p;
-		p = pre->next;
 	}
 	free(pre);
 
